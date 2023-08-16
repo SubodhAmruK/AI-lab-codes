@@ -3,7 +3,6 @@ m = int(input("Enter no.of Edges : "))
 degrees = [0]*n
 graph = [[] for _ in range(n)]
 
-
 if(m%2 != 0):
     print("-1")
 else:
@@ -17,9 +16,8 @@ else:
             break
         else:
             graph[u].append(v)
-    
-    for i in range(n):
-        degrees[i] = len(graph[i])
+            degrees[u] +=1
+            degrees[v] +=1
 
 print(degrees)
 print(graph)
