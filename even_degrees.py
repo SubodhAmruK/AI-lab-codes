@@ -20,7 +20,7 @@ else:
             degree[v-1]+=1    
             graph[i] = 1;
         elif degree[u-1] %2 != 0 and degree[v-1] %2 != 0:
-            degree[v-1]+=1 
+            degree[v-1]+=1
     for i in degree:
         if i%2 !=0:
             print(-1)
