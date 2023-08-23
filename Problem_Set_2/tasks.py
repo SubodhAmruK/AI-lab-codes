@@ -11,7 +11,7 @@ def canFinish(tasks, prerequisites):
     for i in range(tasks): #Finds the first node with degree 0
         if degree[i] == 0:
             node = i
-        
+            
     if node == -1:
         return False
     else:
