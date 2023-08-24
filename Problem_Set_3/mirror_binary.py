@@ -1,9 +1,8 @@
 n = int(input("Enter Height of Binary Tree : "))
 
 tree = [[] for _ in range(n)]
-sep_tree = (pow(2,n))//2
-left_tree = [[] for _ in range(sep_tree)]
-right_tree = [[] for _ in range(sep_tree)]
+left_tree = [[] for _ in range(n-1)]
+right_tree = [[] for _ in range(n-1)]
 check = True
 
 for i in range(n):
@@ -13,10 +12,10 @@ for i in range(n):
         tree[i].append(val)
         if i>0:
             if j < no_of_inputs//2:
-                left_tree[i].append(val)
+                left_tree[i-1].append(val)
             else:
-                right_tree[i].append(val)
-    if left_tree[i] != right_tree[i]:
+                right_tree[i-1].append(val)
+    if left_tree[i-1] != right_tree[i-1]:
         check = False
        
 print(tree)
