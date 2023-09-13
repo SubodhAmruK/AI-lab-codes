@@ -3,11 +3,11 @@ import copy
 graph = [[8, 3, 4], [1, 7, 2], [5, 6, 0]]  # initial state
 goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # final state
 level = 4  # no of levels
-queue = []
-n = 2
-g=0
+queue = [] # queue
+n = 2 # size of matrix
+g=0 # calculates g(n)
 
-def print_graph(graph):
+def print_graph(graph): 
     for row in graph:
         for col in row:
             print(col, end=" ")
@@ -56,6 +56,14 @@ def find_heu(graph):
             if graph[i][j] != goal_state[i][j]:
                 hs += 1
     return hs
+def next_state(graph,next_hs):
+    hs = find_heu(graph)
+    fs = hs+g
+    if next_hs==-1:
+        next_hs = fs
+    elif fs<=next_hs:
+        next_hs = fs
+        next_trav = copy.deepcopy(graph)
 
 def create(g):
     row_index = find_row_index(graph)
@@ -63,6 +71,8 @@ def create(g):
     queue.append(copy.deepcopy(graph))
     print_graph(queue[0])
     for i in range(level):
+        next_hs = -1
+        next_trav = 0
         print("Level : ", (i + 1))
         g+=1
         num_nodes_at_level = len(queue)
@@ -75,26 +85,31 @@ def create(g):
                 current_state[row_index][col_index] = current_state[row_index - 1][col_index]
                 current_state[row_index - 1][col_index] = temp
                 hs = find_heu(current_state)
-                print("H(s) : ",hs)
-                print("G(s) : ",g)
-                print("F(s) : ",hs+g)
-                print()
-                print_graph(current_state)
-                queue.append(copy.deepcopy(current_state))
+                fs = hs+g
+                next_state(current_state,next_hs)
+                #print("H(s) : ",hs)
+                #print("G(s) : ",g)
+                #print("F(s) : ",hs+g)
+                #print()
+                #print_graph(current_state)
+                #queue.append(copy.deepcopy(current_state))
                 temp = current_state[row_index][col_index]
                 current_state[row_index][col_index] = current_state[row_index - 1][col_index]
                 current_state[row_index - 1][col_index] = temp
+            
             if left(current_state, row_index, col_index):
                 temp = current_state[row_index][col_index]
                 current_state[row_index][col_index] = current_state[row_index][col_index - 1]
                 current_state[row_index][col_index - 1] = temp
                 hs = find_heu(current_state)
-                print("H(s) : ",hs)
-                print("G(s) : ",g)
-                print("F(s) : ",hs+g)
-                print()
-                print_graph(current_state)
-                queue.append(copy.deepcopy(current_state))
+                fs = hs+g
+                next_state(current_state,next_hs)
+                #print("H(s) : ",hs)
+                #print("G(s) : ",g)
+                #print("F(s) : ",fs)
+                #print()
+                #print_graph(current_state)
+                #queue.append(copy.deepcopy(current_state))
                 temp = current_state[row_index][col_index]
                 current_state[row_index][col_index] = current_state[row_index][col_index - 1]
                 current_state[row_index][col_index - 1] = temp
@@ -103,12 +118,14 @@ def create(g):
                 current_state[row_index][col_index] = current_state[row_index + 1][col_index]
                 current_state[row_index + 1][col_index] = temp
                 hs = find_heu(current_state)
-                print("H(s) : ",hs)
-                print("G(s) : ",g)
-                print("F(s) : ",hs+g)
-                print()
-                print_graph(current_state)
-                queue.append(copy.deepcopy(current_state))
+                fs=hs+g
+                next_state(current_state,next_hs)
+                #print("H(s) : ",hs)
+                #print("G(s) : ",g)
+                #print("F(s) : ",fs)
+                #print()
+                #print_graph(current_state)
+                #queue.append(copy.deepcopy(current_state))
                 temp = current_state[row_index][col_index]
                 current_state[row_index][col_index] = current_state[row_index + 1][col_index]
                 current_state[row_index + 1][col_index] = temp
@@ -117,15 +134,24 @@ def create(g):
                 current_state[row_index][col_index] = current_state[row_index][col_index + 1]
                 current_state[row_index][col_index + 1] = temp
                 hs = find_heu(current_state)
-                print("H(s) : ",hs)
-                print("G(s) : ",g)
-                print("F(s) : ",hs+g)
-                print()
-                print_graph(current_state)
-                queue.append(copy.deepcopy(current_state))
+                fs = hs+g
+                next_state(current_state,next_hs)
+                #print("H(s) : ",hs)
+                #print("G(s) : ",g)
+                #print("F(s) : ",hs+g)
+                #print()
+                #print_graph(current_state)
+                #queue.append(copy.deepcopy(current_state))
                 temp = current_state[row_index][col_index]
                 current_state[row_index][col_index] = current_state[row_index][col_index + 1]
                 current_state[row_index][col_index + 1] = temp
-
+        hs = find_heu(next_trav)
+        fs = hs+g
+        print("H(s) : ",hs)
+        print("G(s) : ",g)
+        print("F(s) : ",fs)
+        print()
+        queue.append(copy.deepcopy(next_trav))
+        print(next_trav)
 
 create(g)
