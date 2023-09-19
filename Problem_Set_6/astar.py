@@ -1,3 +1,5 @@
+#AP21110010141
+#Subodh Amru K
 import copy
 
 graph = [[8, 3, 4], [1, 7, 2], [5, 6, 0]]  # initial state
